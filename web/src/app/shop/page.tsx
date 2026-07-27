@@ -1,0 +1,61 @@
+import type { Metadata } from "next";
+import { ProductGrid } from "@/components/ProductGrid";
+import { SiteHeader } from "@/components/SiteHeader";
+import { getProducts } from "@/lib/api";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Shop",
+};
+
+const categories = [
+  { value: "", label: "All" },
+  { value: "vales", label: "Gift vouchers" },
+  { value: "merch", label: "Merch" },
+  { value: "apparel", label: "Apparel" },
+];
+
+export default async function ShopPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) {
+  const { category } = await searchParams;
+  const products = await getProducts(category);
+
+  return (
+    <>
+      <SiteHeader />
+      <main className="mx-auto max-w-7xl flex-1 px-5 py-14 md:px-8 md:py-20">
+        <p className="text-xs uppercase tracking-[0.22em] text-mute">Catalog</p>
+        <h1 className="mt-3 font-display text-5xl font-bold uppercase tracking-tight md:text-6xl">
+          Shop
+        </h1>
+        <p className="mt-4 max-w-md text-mute">
+          Gift vouchers (vales de regalo), studio merch, and apparel — everything
+          from Maggie Studio in one place.
+        </p>
+
+        <div className="mt-10 flex flex-wrap gap-2 border-b border-line pb-6">
+          {categories.map((cat) => {
+            const active = (category ?? "") === cat.value;
+            const href = cat.value ? `/shop?category=${cat.value}` : "/shop";
+            return (
+              <Link
+                key={cat.label}
+                href={href}
+                className={`btn-chip ${active ? "is-active" : ""}`}
+              >
+                {cat.label}
+              </Link>
+            );
+          })}
+        </div>
+
+        <div className="mt-12">
+          <ProductGrid products={products} />
+        </div>
+      </main>
+    </>
+  );
+}

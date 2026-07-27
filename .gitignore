@@ -1,0 +1,13 @@
+# Maggie Studio — gift vouchers & tattoo merch
+node_modules/
+.DS_Store
+*.log
+.env
+.env.local
+.env*.local
+dist/
+.next/
+coverage/
+.turbo/
+*.tsbuildinfo
+.vercel

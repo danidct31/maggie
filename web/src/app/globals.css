@@ -324,38 +324,59 @@ body {
   }
 }
 
-/* —— Wall menu contours (hero pic 1) —— */
-.wall-contour-link {
+/* —— Wall cutout menu (object silhouettes) —— */
+.wall-stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  aspect-ratio: 1600 / 1200;
+  width: 100%;
+  height: auto;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.wall-cutout-link {
+  position: absolute;
+  display: block;
   cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: center bottom;
 }
 
-.wall-contour {
-  fill: transparent;
-  stroke: rgba(255, 204, 51, 0);
-  stroke-width: 3;
+.wall-cutout-link:hover,
+.wall-cutout-link:focus-visible {
+  transform: translateY(-10px) scale(1.04);
+  z-index: 5;
+  outline: none;
+}
+
+.wall-cutout-hit {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  border: 1px solid transparent;
   transition:
-    fill 0.25s ease,
-    stroke 0.25s ease,
-    filter 0.25s ease;
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
 }
 
-.wall-contour-link:hover .wall-contour,
-.wall-contour-link:focus-visible .wall-contour {
-  fill: rgba(255, 204, 51, 0.12);
-  stroke: rgba(255, 204, 51, 0.9);
-  filter: url(#contourGlow);
+.wall-cutout-link:hover .wall-cutout-hit,
+.wall-cutout-link:focus-visible .wall-cutout-hit {
+  border-color: rgba(255, 204, 51, 0.85);
+  background: rgba(255, 204, 51, 0.1);
+  box-shadow: 0 0 22px rgba(255, 204, 51, 0.4);
 }
 
-.wall-contour-label {
-  opacity: 0;
-  transform: translateY(6px);
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
-}
-
-.wall-contour-label span {
-  display: inline-block;
+.wall-cutout-label {
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%) translateY(6px);
+  white-space: nowrap;
   padding: 0.35rem 0.65rem;
   font-size: 0.7rem;
   font-weight: 700;
@@ -363,20 +384,29 @@ body {
   text-transform: uppercase;
   color: #1a1400;
   background: linear-gradient(135deg, #e6a800, #ffcc33 55%, #fff6c2);
+  opacity: 0;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-  white-space: nowrap;
 }
 
-.wall-contour-link:hover .wall-contour-label,
-.wall-contour-link:focus-visible .wall-contour-label {
+.wall-cutout-link:hover .wall-cutout-label,
+.wall-cutout-link:focus-visible .wall-cutout-label {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wall-contour,
-  .wall-contour-label {
+  .wall-cutout-link,
+  .wall-cutout-label,
+  .wall-cutout-hit {
     transition: none;
+  }
+
+  .wall-cutout-link:hover,
+  .wall-cutout-link:focus-visible {
+    transform: none;
   }
 }
 

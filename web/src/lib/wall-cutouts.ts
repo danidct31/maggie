@@ -1,0 +1,112 @@
+export type WallCutout = {
+  id: string;
+  file: string | null;
+  href: string;
+  labelKey:
+    | 'wallShop'
+    | 'wallVouchers'
+    | 'wallAftercare'
+    | 'wallSupplies'
+    | 'wallMerch'
+    | 'wallBio'
+    | 'wallContact'
+    | 'wallInstagram';
+  external?: boolean;
+  leftPct: number;
+  topPct: number;
+  widthPct: number;
+  heightPct: number;
+  bakedIn?: boolean;
+};
+
+export const wallCutouts: WallCutout[] = [
+  {
+    "id": "skull",
+    "file": "/images/cutouts/skull.png",
+    "href": "/shop?category=vales",
+    "labelKey": "wallVouchers",
+    "external": false,
+    "leftPct": 29.438,
+    "topPct": 16.667,
+    "widthPct": 10.812,
+    "heightPct": 31.667
+  },
+  {
+    "id": "make-art",
+    "file": "/images/cutouts/make-art.png",
+    "href": "/shop",
+    "labelKey": "wallShop",
+    "external": false,
+    "leftPct": 4.375,
+    "topPct": 56.667,
+    "widthPct": 16.25,
+    "heightPct": 36.667
+  },
+  {
+    "id": "heart",
+    "file": "/images/cutouts/heart.png",
+    "href": "/shop?category=aftercare",
+    "labelKey": "wallAftercare",
+    "external": false,
+    "leftPct": 42.5,
+    "topPct": 59.75,
+    "widthPct": 15.0,
+    "heightPct": 9.583
+  },
+  {
+    "id": "patent",
+    "file": "/images/cutouts/patent.png",
+    "href": "/shop?category=supplies",
+    "labelKey": "wallSupplies",
+    "external": false,
+    "leftPct": 56.25,
+    "topPct": 20.833,
+    "widthPct": 18.75,
+    "heightPct": 40.833
+  },
+  {
+    "id": "leopard",
+    "file": "/images/cutouts/leopard.png",
+    "href": "/shop?category=merch",
+    "labelKey": "wallMerch",
+    "external": false,
+    "leftPct": 84.438,
+    "topPct": 33.167,
+    "widthPct": 8.75,
+    "heightPct": 14.167
+  },
+  {
+    "id": "roses",
+    "file": "/images/cutouts/roses.png",
+    "href": "#bio",
+    "labelKey": "wallBio",
+    "external": false,
+    "leftPct": 47.375,
+    "topPct": 0.833,
+    "widthPct": 15.687,
+    "heightPct": 24.333
+  },
+  {
+    "id": "botanical",
+    "file": "/images/cutouts/botanical.png",
+    "href": "mailto:hello@maggiestudio.shop",
+    "labelKey": "wallContact",
+    "external": true,
+    "leftPct": 41.25,
+    "topPct": 75.5,
+    "widthPct": 11.25,
+    "heightPct": 23.25
+  },
+  {
+    "id": "instagram",
+    "file": null,
+    "href": "https://www.instagram.com/lamaggietattoo_studio/",
+    "labelKey": "wallInstagram",
+    "external": true,
+    "leftPct": 17.188,
+    "topPct": 47.917,
+    "widthPct": 8.125,
+    "heightPct": 13.333,
+    "bakedIn": true
+  }
+];

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, Nunito, Oswald } from "next/font/google";
+import { Providers } from "@/components/Providers";
 import { SiteFooter } from "@/components/SiteFooter";
 import "./globals.css";
 
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s · Maggie Studio",
   },
   description:
-    "Maggie Studio — buy gift vouchers (vales de regalo) and tattoo merch online. Ink that starts as a gift.",
+    "Maggie Studio — buy gift vouchers (vales de regalo) and tattoo supplies. Studio items here; Amazon checkout when you are ready.",
 };
 
 export default function RootLayout({
@@ -41,8 +42,10 @@ export default function RootLayout({
       className={`${oswald.variable} ${manrope.variable} ${nunito.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
-        <div className="flex flex-1 flex-col">{children}</div>
-        <SiteFooter />
+        <Providers>
+          <div className="flex flex-1 flex-col">{children}</div>
+          <SiteFooter />
+        </Providers>
       </body>
     </html>
   );

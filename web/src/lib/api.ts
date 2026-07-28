@@ -15,10 +15,19 @@ async function apiFetch<T>(path: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
+function withDefaults(product: Product): Product {
+  return {
+    ...product,
+    fulfillment: product.fulfillment ?? "studio",
+    amazonAsin: product.amazonAsin ?? null,
+  };
+}
+
 export async function getProducts(category?: string): Promise<Product[]> {
   try {
     const query = category ? `?category=${encodeURIComponent(category)}` : "";
-    return await apiFetch<Product[]>(`/products${query}`);
+    const products = await apiFetch<Product[]>(`/products${query}`);
+    return products.map(withDefaults);
   } catch {
     return fallbackProducts.filter((p) =>
       category ? p.category === category : true,
@@ -28,7 +37,8 @@ export async function getProducts(category?: string): Promise<Product[]> {
 
 export async function getFeaturedProducts(): Promise<Product[]> {
   try {
-    return await apiFetch<Product[]>("/products/featured");
+    const products = await apiFetch<Product[]>("/products/featured");
+    return products.map(withDefaults);
   } catch {
     return fallbackProducts.filter((p) => p.featured);
   }
@@ -36,11 +46,14 @@ export async function getFeaturedProducts(): Promise<Product[]> {
 
 export async function getProduct(slug: string): Promise<Product | null> {
   try {
-    return await apiFetch<Product>(`/products/${slug}`);
+    const product = await apiFetch<Product>(`/products/${slug}`);
+    return withDefaults(product);
   } catch {
     return fallbackProducts.find((p) => p.slug === slug) ?? null;
   }
 }
+
+const now = () => new Date().toISOString();
 
 /** Offline / pre-API catalog so the shop still looks alive locally */
 const fallbackProducts: Product[] = [
@@ -56,8 +69,10 @@ const fallbackProducts: Product[] = [
       "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1200&q=80",
     sizes: ["ONE"],
     featured: true,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    fulfillment: "studio",
+    amazonAsin: null,
+    createdAt: now(),
+    updatedAt: now(),
   },
   {
     id: "2",
@@ -71,8 +86,10 @@ const fallbackProducts: Product[] = [
       "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1200&q=80",
     sizes: ["ONE"],
     featured: true,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    fulfillment: "studio",
+    amazonAsin: null,
+    createdAt: now(),
+    updatedAt: now(),
   },
   {
     id: "3",
@@ -86,82 +103,128 @@ const fallbackProducts: Product[] = [
       "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=1200&q=80",
     sizes: ["ONE"],
     featured: true,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    fulfillment: "studio",
+    amazonAsin: null,
+    createdAt: now(),
+    updatedAt: now(),
   },
   {
     id: "4",
-    slug: "vale-250",
-    name: "Gift voucher €250",
+    slug: "healing-balm",
+    name: "Tattoo healing balm",
     description:
-      "A €250 studio voucher for a full session credit. Ideal for someone ready for a serious piece. Valid for 12 months.",
-    priceCents: 25000,
-    category: "vales",
+      "Fragrance-free healing balm for fresh ink. Amazon example product — browse here, checkout on Amazon when the shop goes live.",
+    priceCents: 1299,
+    category: "aftercare",
     imageUrl:
-      "https://images.unsplash.com/photo-1607344645866-009c447b6a0b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=1200&q=80",
     sizes: ["ONE"],
-    featured: false,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    featured: true,
+    fulfillment: "amazon",
+    amazonAsin: "PENDING-HEALING-BALM",
+    createdAt: now(),
+    updatedAt: now(),
   },
   {
     id: "5",
-    slug: "ink-studio-tee",
-    name: "Ink Studio Tee",
+    slug: "second-skin-wrap",
+    name: "Second-skin tattoo wrap",
     description:
-      "Heavyweight black tee with the Maggie Studio mark. Soft cotton, boxy fit — made for the shop floor and the street.",
-    priceCents: 3200,
-    category: "apparel",
+      "Breathable protective film for the first days after a session. Placeholder Amazon ASIN until Maggie’s store is connected.",
+    priceCents: 1899,
+    category: "aftercare",
     imageUrl:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1200&q=80",
-    sizes: ["S", "M", "L", "XL"],
+      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=1200&q=80",
+    sizes: ["ONE"],
     featured: true,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    fulfillment: "amazon",
+    amazonAsin: "PENDING-SECOND-SKIN",
+    createdAt: now(),
+    updatedAt: now(),
   },
   {
     id: "6",
-    slug: "needle-tote",
-    name: "Needle Tote",
+    slug: "green-soap",
+    name: "Concentrated green soap",
     description:
-      "Canvas tote with screen-printed studio line art. Holds a sketchbook, aftercare, and whatever else the day needs.",
-    priceCents: 2800,
-    category: "merch",
+      "Studio-grade green soap concentrate for cleaning skin during and after tattooing. Amazon example listing.",
+    priceCents: 1599,
+    category: "supplies",
     imageUrl:
-      "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=80",
     sizes: ["ONE"],
-    featured: true,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    featured: false,
+    fulfillment: "amazon",
+    amazonAsin: "PENDING-GREEN-SOAP",
+    createdAt: now(),
+    updatedAt: now(),
   },
   {
     id: "7",
-    slug: "flash-print-pack",
-    name: "Flash Print Pack",
+    slug: "stencil-transfer-paper",
+    name: "Stencil transfer paper",
     description:
-      "Three limited studio flash prints on heavy stock. Pick up in studio or ship — hang them or use them as reference.",
-    priceCents: 4500,
+      "Thermal stencil paper for clean transfers from sketch to skin. Example Amazon supply — replace ASIN when live.",
+    priceCents: 1499,
+    category: "supplies",
+    imageUrl:
+      "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1200&q=80",
+    sizes: ["ONE"],
+    featured: true,
+    fulfillment: "amazon",
+    amazonAsin: "PENDING-STENCIL-PAPER",
+    createdAt: now(),
+    updatedAt: now(),
+  },
+  {
+    id: "8",
+    slug: "nitrile-gloves",
+    name: "Black nitrile gloves (box)",
+    description:
+      "Powder-free black nitrile gloves — a studio essential. Shown as an Amazon example product for the shop architecture.",
+    priceCents: 1199,
+    category: "supplies",
+    imageUrl:
+      "https://images.unsplash.com/photo-1583947215259-38e31bebd861?auto=format&fit=crop&w=1200&q=80",
+    sizes: ["M", "L", "XL"],
+    featured: false,
+    fulfillment: "amazon",
+    amazonAsin: "PENDING-NITRILE-GLOVES",
+    createdAt: now(),
+    updatedAt: now(),
+  },
+  {
+    id: "9",
+    slug: "flash-sheet-book",
+    name: "Traditional flash sheet book",
+    description:
+      "Classic tattoo flash reference book for inspiration and wall energy. Amazon example — checkout stays on Amazon.",
+    priceCents: 2499,
     category: "merch",
     imageUrl:
       "https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?auto=format&fit=crop&w=1200&q=80",
     sizes: ["ONE"],
-    featured: false,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    featured: true,
+    fulfillment: "amazon",
+    amazonAsin: "PENDING-FLASH-BOOK",
+    createdAt: now(),
+    updatedAt: now(),
   },
   {
-    id: "8",
-    slug: "aftercare-kit",
-    name: "Aftercare Kit",
+    id: "10",
+    slug: "ink-cap-set",
+    name: "Disposable ink cap set",
     description:
-      "Studio-approved aftercare: fragrance-free wash, healing balm, and printed care card. Everything for the first weeks.",
-    priceCents: 2400,
-    category: "merch",
+      "Single-use ink caps for clean sessions. Placeholder Amazon product wired into the late-checkout bag flow.",
+    priceCents: 999,
+    category: "supplies",
     imageUrl:
-      "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?auto=format&fit=crop&w=1200&q=80",
     sizes: ["ONE"],
     featured: false,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    fulfillment: "amazon",
+    amazonAsin: "PENDING-INK-CAPS",
+    createdAt: now(),
+    updatedAt: now(),
   },
 ];

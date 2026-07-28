@@ -8,7 +8,7 @@ export function MaggieBio() {
           <p className="text-xs uppercase tracking-[0.22em] text-mute">
             The artist
           </p>
-          <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-tight md:text-5xl">
+          <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-tight text-foreground md:text-5xl">
             Meet Maggie
           </h2>
           <div className="mt-6 space-y-4 text-base leading-relaxed text-mute md:text-lg">

@@ -1,13 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import {
+  buildAmazonProductUrl,
+  isPlaceholderAsin,
+} from "@/lib/amazon";
+import { useBag } from "@/lib/bag";
 import type { Product } from "@/lib/types";
+import { isAmazonProduct } from "@/lib/types";
 
 export function ProductActions({ product }: { product: Product }) {
   const showSizes = product.sizes.length > 1 || product.sizes[0] !== "ONE";
   const [size, setSize] = useState(product.sizes[0] ?? "");
   const [added, setAdded] = useState(false);
-  const isVale = product.category === "vales";
+  const { addProduct } = useBag();
+  const amazon = isAmazonProduct(product);
+  const asinReady =
+    Boolean(product.amazonAsin) && !isPlaceholderAsin(product.amazonAsin);
 
   return (
     <div className="mt-10 space-y-6">
@@ -31,22 +40,48 @@ export function ProductActions({ product }: { product: Product }) {
         </div>
       )}
 
-      <button
-        type="button"
-        onClick={() => {
-          setAdded(true);
-          window.setTimeout(() => setAdded(false), 1800);
-        }}
-        className={`btn btn-ink ${added ? "is-success" : ""}`}
-      >
-        <span>
-          {added
-            ? "Added to bag"
-            : isVale
-              ? "Add voucher to bag"
-              : "Add to bag"}
-        </span>
-      </button>
+      {amazon && (
+        <p className="text-sm text-mute">
+          Sold via Amazon — stay on Maggie Studio until checkout.
+          {!asinReady && (
+            <span className="mt-1 block text-neon/80">
+              Example listing (ASIN pending). Replace with a real ASIN when the
+              Amazon shop is ready.
+            </span>
+          )}
+        </p>
+      )}
+
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <button
+          type="button"
+          onClick={() => {
+            addProduct(product);
+            setAdded(true);
+            window.setTimeout(() => setAdded(false), 1800);
+          }}
+          className={`btn btn-ink ${added ? "is-success" : ""}`}
+        >
+          <span>
+            {added
+              ? "Added to bag"
+              : product.category === "vales"
+                ? "Add voucher to bag"
+                : "Add to bag"}
+          </span>
+        </button>
+
+        {amazon && asinReady && product.amazonAsin && (
+          <a
+            href={buildAmazonProductUrl(product.amazonAsin)}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="btn btn-primary"
+          >
+            <span>Buy on Amazon</span>
+          </a>
+        )}
+      </div>
     </div>
   );
 }

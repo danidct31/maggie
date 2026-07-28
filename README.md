@@ -117,4 +117,12 @@ npx prisma db seed
 
 ## Catalog
 
-Categories: **vales** (gift vouchers), **merch**, **apparel**.
+Categories: **vales** (studio gift vouchers), **aftercare**, **supplies**, **merch**.
+
+Amazon-ready items use `fulfillment: "amazon"` + a placeholder `amazonAsin` (`PENDING-*`). Browse and bag stay on Maggie Studio; checkout builds an Amazon cart URL when real ASINs + Associates tag are set (`NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG`).
+
+```
+Browse / product / bag  →  Maggie Studio
+Checkout Amazon items   →  amazon.es cart (late redirect)
+Studio vouchers         →  future Stripe / studio checkout
+```

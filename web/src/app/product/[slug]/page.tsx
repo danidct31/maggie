@@ -36,7 +36,7 @@ export default async function ProductPage({ params }: Props) {
       <main className="mx-auto max-w-7xl flex-1 px-5 py-10 md:px-8 md:py-16">
         <Link
           href="/shop"
-          className="text-sm text-mute transition hover:text-ink"
+          className="text-sm text-mute transition hover:text-foreground"
         >
           ← Back to shop
         </Link>
@@ -57,10 +57,10 @@ export default async function ProductPage({ params }: Props) {
             <p className="text-xs uppercase tracking-[0.22em] text-mute">
               {categoryLabel(product.category)}
             </p>
-            <h1 className="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">
+            <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-foreground md:text-5xl">
               {product.name}
             </h1>
-            <p className="mt-4 text-xl tabular-nums">
+            <p className="mt-4 text-xl tabular-nums text-foreground">
               {formatPrice(product.priceCents)}
             </p>
             <p className="mt-8 max-w-md text-base leading-relaxed text-mute">
@@ -72,7 +72,7 @@ export default async function ProductPage({ params }: Props) {
 
         {related.length > 0 && (
           <section className="mt-24 border-t border-line pt-16">
-            <h2 className="font-display text-3xl font-bold uppercase tracking-tight">
+            <h2 className="font-display text-3xl font-bold uppercase tracking-tight text-foreground">
               More in {categoryLabel(product.category)}
             </h2>
             <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
@@ -87,7 +87,7 @@ export default async function ProductPage({ params }: Props) {
                       sizes="25vw"
                     />
                   </div>
-                  <p className="mt-3 font-display font-semibold">{item.name}</p>
+                  <p className="mt-3 font-display font-semibold text-foreground">{item.name}</p>
                   <p className="text-sm tabular-nums text-mute">
                     {formatPrice(item.priceCents)}
                   </p>

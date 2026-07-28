@@ -20,13 +20,13 @@ export default async function HomePage() {
             <p className="text-xs uppercase tracking-[0.22em] text-mute">
               Featured
             </p>
-            <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-tight md:text-5xl">
+            <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-tight text-foreground md:text-5xl">
               Studio picks
             </h2>
           </div>
           <Link
             href="/shop"
-            className="text-sm tracking-wide underline decoration-line underline-offset-4 transition hover:decoration-ink"
+            className="text-sm tracking-wide text-foreground underline decoration-line underline-offset-4 transition hover:decoration-neon"
           >
             View all
           </Link>
@@ -35,7 +35,7 @@ export default async function HomePage() {
       </section>
 
       <section className="relative overflow-hidden bg-ink px-5 py-24 text-paper md:px-8 md:py-32">
-        <div className="absolute -right-20 top-0 h-72 w-72 rounded-full bg-ember/20 blur-3xl" />
+        <div className="absolute -right-20 top-0 h-72 w-72 rounded-full bg-neon/15 blur-3xl" />
         <div className="relative mx-auto max-w-7xl">
           <p className="text-xs uppercase tracking-[0.22em] text-white/50">
             Why Maggie
@@ -46,8 +46,8 @@ export default async function HomePage() {
             Take the shop home.
           </h2>
           <p className="mt-6 max-w-lg text-base leading-relaxed text-white/65 md:text-lg">
-            Gift vouchers for sessions and studio merch built to last — the same
-            care we put into every piece of work on skin.
+            Gift vouchers for sessions, plus aftercare and supplies — browse on
+            Maggie Studio, then checkout Amazon items only when you are ready.
           </p>
         </div>
       </section>

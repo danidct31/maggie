@@ -1,11 +1,12 @@
 import Link from "next/link";
+import { BagButton } from "@/components/BagButton";
 import { MaggieLogo } from "@/components/MaggieLogo";
 
 const links = [
   { href: "/shop", label: "Shop" },
   { href: "/shop?category=vales", label: "Gift vouchers" },
-  { href: "/shop?category=merch", label: "Merch" },
-  { href: "/shop?category=apparel", label: "Apparel" },
+  { href: "/shop?category=aftercare", label: "Aftercare" },
+  { href: "/shop?category=supplies", label: "Supplies" },
 ];
 
 export function SiteHeader({
@@ -18,7 +19,7 @@ export function SiteHeader({
       className={
         transparent
           ? "absolute inset-x-0 top-0 z-50"
-          : "sticky top-0 z-50 border-b border-white/10 bg-ink"
+          : "sticky top-0 z-50 border-b border-neon/15 bg-ink"
       }
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 md:px-8">
@@ -38,13 +39,7 @@ export function SiteHeader({
           <Link href="/shop" className="nav-link md:hidden">
             Shop
           </Link>
-          <button
-            type="button"
-            className="nav-link"
-            aria-label="Bag (coming soon)"
-          >
-            Bag (0)
-          </button>
+          <BagButton />
         </div>
       </div>
     </header>

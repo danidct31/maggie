@@ -11,8 +11,9 @@ export const metadata: Metadata = {
 const categories = [
   { value: "", label: "All" },
   { value: "vales", label: "Gift vouchers" },
+  { value: "aftercare", label: "Aftercare" },
+  { value: "supplies", label: "Supplies" },
   { value: "merch", label: "Merch" },
-  { value: "apparel", label: "Apparel" },
 ];
 
 export default async function ShopPage({
@@ -28,12 +29,12 @@ export default async function ShopPage({
       <SiteHeader />
       <main className="mx-auto max-w-7xl flex-1 px-5 py-14 md:px-8 md:py-20">
         <p className="text-xs uppercase tracking-[0.22em] text-mute">Catalog</p>
-        <h1 className="mt-3 font-display text-5xl font-bold uppercase tracking-tight md:text-6xl">
+        <h1 className="mt-3 font-display text-5xl font-bold uppercase tracking-tight text-foreground md:text-6xl">
           Shop
         </h1>
-        <p className="mt-4 max-w-md text-mute">
-          Gift vouchers (vales de regalo), studio merch, and apparel — everything
-          from Maggie Studio in one place.
+        <p className="mt-4 max-w-lg text-mute">
+          Gift vouchers from the studio, plus tattoo aftercare and supplies —
+          Amazon examples stay on this site until checkout.
         </p>
 
         <div className="mt-10 flex flex-wrap gap-2 border-b border-line pb-6">

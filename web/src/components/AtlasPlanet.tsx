@@ -51,22 +51,31 @@ const territories: Territory[] = [
     labelY: 390,
   },
   {
-    id: "apparel",
-    name: "Apparel",
-    href: "/shop?category=apparel",
-    blurb: "Tees & wearables",
+    id: "aftercare",
+    name: "Aftercare",
+    href: "/shop?category=aftercare",
+    blurb: "Heal right after ink",
     path: "M90 180 C115 200 130 240 125 280 C120 320 90 350 60 340 C30 330 20 285 35 245 C50 205 65 185 90 180 Z",
     labelX: 75,
     labelY: 265,
+  },
+  {
+    id: "supplies",
+    name: "Supplies",
+    href: "/shop?category=supplies",
+    blurb: "Studio essentials via Amazon",
+    path: "M215 300 C255 290 300 310 310 350 C320 390 295 430 250 440 C205 450 165 420 160 380 C155 340 180 310 215 300 Z",
+    labelX: 235,
+    labelY: 370,
   },
   {
     id: "contact",
     name: "Contact",
     href: "mailto:hello@maggiestudio.shop",
     blurb: "Book or ask the studio",
-    path: "M215 300 C255 290 300 310 310 350 C320 390 295 430 250 440 C205 450 165 420 160 380 C155 340 180 310 215 300 Z",
-    labelX: 235,
-    labelY: 370,
+    path: "M155 245 C185 250 205 275 200 305 C195 335 165 350 135 340 C105 330 100 295 115 270 C125 255 140 245 155 245 Z",
+    labelX: 155,
+    labelY: 295,
   },
 ];
 
@@ -75,7 +84,7 @@ export function AtlasPlanet() {
   const current = territories.find((t) => t.id === active) ?? territories[2];
 
   return (
-    <section className="atlas-section relative overflow-hidden bg-[#12080a] px-5 py-24 text-paper md:px-8 md:py-32">
+    <section className="atlas-section relative overflow-hidden bg-[#140c08] px-5 py-24 text-paper md:px-8 md:py-32">
       <div className="atlas-grid pointer-events-none absolute inset-0 opacity-40" />
       <div className="relative mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-16">
         <div>
@@ -87,7 +96,7 @@ export function AtlasPlanet() {
           </h2>
           <p className="mt-5 max-w-md text-base leading-relaxed text-white/65">
             Every territory is a page. Hover a region, then travel — gift
-            vouchers, merch, and apparel.
+            vouchers, aftercare, and Amazon supplies.
           </p>
 
           <div className="atlas-legend mt-10 border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm">

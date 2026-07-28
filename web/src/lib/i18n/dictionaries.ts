@@ -16,6 +16,15 @@ export type Dictionary = {
     tagline: string;
     ctaVoucher: string;
     ctaMerch: string;
+    wallHint: string;
+    wallShop: string;
+    wallVouchers: string;
+    wallAftercare: string;
+    wallSupplies: string;
+    wallMerch: string;
+    wallBio: string;
+    wallContact: string;
+    wallInstagram: string;
   };
   bio: {
     eyebrow: string;
@@ -108,6 +117,15 @@ const en: Dictionary = {
     tagline: "Gift vouchers and studio merch — give ink, or wear the shop.",
     ctaVoucher: "Buy a gift voucher",
     ctaMerch: "Shop merch",
+    wallHint: "Click the objects on the wall to explore",
+    wallShop: "Shop",
+    wallVouchers: "Gift vouchers",
+    wallAftercare: "Aftercare",
+    wallSupplies: "Supplies",
+    wallMerch: "Merch",
+    wallBio: "Meet Maggie",
+    wallContact: "Contact",
+    wallInstagram: "Instagram",
   },
   bio: {
     eyebrow: "The artist",
@@ -262,6 +280,15 @@ const it: Dictionary = {
     tagline: "Buoni regalo e merch dallo studio — regala inchiostro, o porta a casa il negozio.",
     ctaVoucher: "Compra un buono regalo",
     ctaMerch: "Vai al merch",
+    wallHint: "Clicca gli oggetti sulla parete per esplorare",
+    wallShop: "Shop",
+    wallVouchers: "Buoni regalo",
+    wallAftercare: "Aftercare",
+    wallSupplies: "Materiali",
+    wallMerch: "Merch",
+    wallBio: "Incontra Maggie",
+    wallContact: "Contatti",
+    wallInstagram: "Instagram",
   },
   bio: {
     eyebrow: "L’artista",

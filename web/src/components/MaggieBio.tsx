@@ -7,7 +7,7 @@ export function MaggieBio() {
   const { t } = useI18n();
 
   return (
-    <section className="border-b border-line bg-paper">
+    <section id="bio" className="border-b border-line bg-paper scroll-mt-24">
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-20 md:grid-cols-2 md:gap-16 md:px-8 md:py-28">
         <div className="animate-rise">
           <p className="text-xs uppercase tracking-[0.22em] text-mute">

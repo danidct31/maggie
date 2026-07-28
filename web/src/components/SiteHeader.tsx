@@ -13,13 +13,6 @@ export function SiteHeader({
 }) {
   const { t } = useI18n();
 
-  const links = [
-    { href: "/shop", label: t.nav.shop },
-    { href: "/shop?category=vales", label: t.nav.vouchers },
-    { href: "/shop?category=aftercare", label: t.nav.aftercare },
-    { href: "/shop?category=supplies", label: t.nav.supplies },
-  ];
-
   return (
     <header
       className={
@@ -28,16 +21,15 @@ export function SiteHeader({
           : "sticky top-0 z-50 border-b border-neon/15 bg-ink"
       }
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 md:px-8">
-        <nav className="hidden items-center gap-8 text-sm tracking-wide text-white/85 md:flex">
-          {links.map((link) => (
-            <Link key={link.href} href={link.href} className="nav-link">
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+      <div className="relative mx-auto flex max-w-7xl items-center justify-between px-5 py-5 md:px-8">
+        <Link
+          href="/shop"
+          className="nav-link text-sm tracking-wide text-white/85"
+        >
+          {t.nav.shop}
+        </Link>
 
-        <div className="md:absolute md:left-1/2 md:-translate-x-1/2">
+        <div className="absolute left-1/2 -translate-x-1/2">
           <MaggieLogo size="nav" />
         </div>
 
@@ -59,9 +51,6 @@ export function SiteHeader({
             </svg>
           </a>
           <LanguageToggle />
-          <Link href="/shop" className="nav-link md:hidden">
-            {t.nav.shop}
-          </Link>
           <BagButton />
         </div>
       </div>

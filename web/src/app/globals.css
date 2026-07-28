@@ -28,6 +28,10 @@
   --color-line: var(--line);
   --font-display: var(--font-oswald);
   --font-sans: var(--font-manrope);
+  --font-logo: var(--font-nunito);
+  --neon: #ffcc33;
+  --neon-core: #fff6c2;
+  --neon-deep: #e6a800;
 }
 
 * {
@@ -119,27 +123,15 @@ body {
   transform: scale(1.04);
 }
 
-@keyframes maggie-shimmer {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
 @keyframes maggie-glow {
   0%,
   100% {
-    filter: drop-shadow(0 0 8px rgba(193, 18, 31, 0.35))
-      drop-shadow(0 0 22px rgba(244, 196, 200, 0.18));
+    filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.55))
+      drop-shadow(0 0 18px rgba(255, 174, 0, 0.35));
   }
   50% {
-    filter: drop-shadow(0 0 14px rgba(193, 18, 31, 0.55))
-      drop-shadow(0 0 36px rgba(193, 18, 31, 0.28));
+    filter: drop-shadow(0 0 10px rgba(255, 246, 194, 0.85))
+      drop-shadow(0 0 28px rgba(255, 204, 51, 0.5));
   }
 }
 
@@ -176,33 +168,89 @@ body {
 @keyframes hero-image-glow {
   0%,
   100% {
-    filter: brightness(1) saturate(1.05)
-      drop-shadow(0 0 40px rgba(193, 18, 31, 0.12));
+    filter: brightness(1) saturate(1.05);
   }
   50% {
-    filter: brightness(1.06) saturate(1.1)
-      drop-shadow(0 0 60px rgba(193, 18, 31, 0.28));
+    filter: brightness(1.04) saturate(1.08);
   }
 }
 
 .maggie-logo {
-  display: inline-block;
-  background-image: linear-gradient(
-    110deg,
-    #8a0d16 0%,
-    #c1121f 22%,
-    #ffffff 48%,
-    #e85a64 68%,
-    #8a0d16 100%
-  );
-  background-size: 220% 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  animation:
-    maggie-shimmer 4.5s ease-in-out infinite,
-    maggie-glow 3.2s ease-in-out infinite;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.9;
+  font-family: var(--font-nunito), sans-serif;
+  animation: maggie-glow 3.2s ease-in-out infinite;
+}
+
+.maggie-logo-name {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: var(--neon-core);
+  text-shadow:
+    0 0 4px rgba(255, 246, 194, 0.95),
+    0 0 12px rgba(255, 204, 51, 0.9),
+    0 0 28px rgba(255, 174, 0, 0.65),
+    0 0 48px rgba(230, 168, 0, 0.35);
+}
+
+.maggie-logo-studio {
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--neon);
+  text-shadow:
+    0 0 4px rgba(255, 246, 194, 0.85),
+    0 0 12px rgba(255, 204, 51, 0.8),
+    0 0 26px rgba(255, 174, 0, 0.55);
+}
+
+.maggie-logo--nav .maggie-logo-name {
+  font-size: 1.35rem;
+}
+
+.maggie-logo--nav .maggie-logo-studio {
+  font-size: 0.62rem;
+}
+
+@media (min-width: 768px) {
+  .maggie-logo--nav .maggie-logo-name {
+    font-size: 1.65rem;
+  }
+
+  .maggie-logo--nav .maggie-logo-studio {
+    font-size: 0.72rem;
+  }
+}
+
+.maggie-logo--hero .maggie-logo-name {
+  font-size: clamp(3.5rem, 14vw, 9rem);
+}
+
+.maggie-logo--hero .maggie-logo-studio {
+  font-size: clamp(1rem, 3.5vw, 2.25rem);
+  letter-spacing: 0.28em;
+}
+
+.maggie-logo--footer .maggie-logo-name {
+  font-size: 2.75rem;
+}
+
+.maggie-logo--footer .maggie-logo-studio {
+  font-size: 1rem;
+  letter-spacing: 0.22em;
+}
+
+@media (min-width: 768px) {
+  .maggie-logo--footer .maggie-logo-name {
+    font-size: 3.5rem;
+  }
+
+  .maggie-logo--footer .maggie-logo-studio {
+    font-size: 1.15rem;
+  }
 }
 
 .hero-media {
@@ -224,9 +272,9 @@ body {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(244, 196, 200, 0.08) 25%,
-    rgba(255, 255, 255, 0.28) 50%,
-    rgba(193, 18, 31, 0.22) 70%,
+    rgba(255, 246, 194, 0.08) 25%,
+    rgba(255, 255, 255, 0.22) 50%,
+    rgba(255, 204, 51, 0.18) 70%,
     transparent 100%
   );
   animation: hero-shimmer-sweep 4.5s ease-in-out infinite;
@@ -238,9 +286,9 @@ body {
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    ellipse at top right,
-    rgba(193, 18, 31, 0.28),
-    transparent 45%
+    ellipse at center,
+    rgba(255, 204, 51, 0.18),
+    transparent 50%
   );
   animation: hero-glow-pulse 3.2s ease-in-out infinite;
 }
@@ -248,7 +296,6 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .maggie-logo {
     animation: none;
-    background-position: 40% 50%;
   }
 
   .hero-media-image,
@@ -331,7 +378,7 @@ body {
 }
 
 .btn:focus-visible {
-  outline: 2px solid var(--ember);
+  outline: 2px solid var(--neon);
   outline-offset: 3px;
 }
 
@@ -341,20 +388,20 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #8a0d16 0%, #c1121f 45%, #e85a64 100%);
-  color: #fff;
-  box-shadow: 0 0 0 rgba(193, 18, 31, 0);
+  background: linear-gradient(135deg, #e6a800 0%, #ffcc33 45%, #fff6c2 100%);
+  color: #1a1400;
+  box-shadow: 0 0 0 rgba(255, 204, 51, 0);
 }
 
 .btn-primary:hover {
   box-shadow:
-    0 10px 28px rgba(193, 18, 31, 0.35),
-    0 0 24px rgba(244, 196, 200, 0.35);
+    0 10px 28px rgba(255, 204, 51, 0.35),
+    0 0 24px rgba(255, 246, 194, 0.4);
   filter: brightness(1.05);
 }
 
 .btn-primary:active {
-  box-shadow: 0 2px 8px rgba(193, 18, 31, 0.25);
+  box-shadow: 0 2px 8px rgba(255, 204, 51, 0.25);
   filter: brightness(0.96);
 }
 
@@ -365,14 +412,14 @@ body {
 }
 
 .btn-ghost:hover {
-  border-color: rgba(193, 18, 31, 0.9);
-  background: rgba(193, 18, 31, 0.15);
+  border-color: rgba(255, 204, 51, 0.9);
+  background: rgba(255, 204, 51, 0.12);
   color: #fff;
-  box-shadow: 0 8px 24px rgba(193, 18, 31, 0.18);
+  box-shadow: 0 8px 24px rgba(255, 204, 51, 0.18);
 }
 
 .btn-ghost:active {
-  background: rgba(193, 18, 31, 0.25);
+  background: rgba(255, 204, 51, 0.22);
 }
 
 .btn-ink {

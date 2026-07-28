@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Oswald } from "next/font/google";
+import { Manrope, Nunito, Oswald } from "next/font/google";
 import { SiteFooter } from "@/components/SiteFooter";
 import "./globals.css";
 
@@ -13,6 +13,12 @@ const manrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const nunito = Nunito({
+  variable: "--font-nunito",
+  subsets: ["latin"],
+  weight: ["700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -32,7 +38,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${oswald.variable} ${manrope.variable} h-full`}
+      className={`${oswald.variable} ${manrope.variable} ${nunito.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
         <div className="flex flex-1 flex-col">{children}</div>

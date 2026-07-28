@@ -7,9 +7,9 @@ type MaggieLogoProps = {
 };
 
 const sizeClass = {
-  nav: "text-xl md:text-2xl tracking-[0.04em]",
-  hero: "text-[12vw] md:text-[8.5rem] leading-[0.85] tracking-[0.02em]",
-  footer: "text-4xl md:text-5xl tracking-[0.04em]",
+  nav: "maggie-logo--nav",
+  hero: "maggie-logo--hero",
+  footer: "maggie-logo--footer",
 };
 
 export function MaggieLogo({
@@ -19,10 +19,11 @@ export function MaggieLogo({
 }: MaggieLogoProps) {
   const mark = (
     <span
-      className={`maggie-logo font-display font-bold uppercase ${sizeClass[size]} ${className}`}
+      className={`maggie-logo ${sizeClass[size]} ${className}`}
       aria-label="Maggie Studio"
     >
-      Maggie Studio
+      <span className="maggie-logo-name">maggie</span>
+      <span className="maggie-logo-studio">STUDIO</span>
     </span>
   );
 

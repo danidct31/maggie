@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AtlasPlanet } from "@/components/AtlasPlanet";
 import { Hero } from "@/components/Hero";
+import { MaggieBio } from "@/components/MaggieBio";
 import { ProductGrid } from "@/components/ProductGrid";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getFeaturedProducts } from "@/lib/api";
@@ -12,6 +13,7 @@ export default async function HomePage() {
     <>
       <SiteHeader transparent />
       <Hero />
+      <MaggieBio />
       <section className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
         <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>

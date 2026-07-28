@@ -65,9 +65,9 @@ OBJECTS = [
     },
 ]
 
-# Gold frame for Instagram (inner artwork window)
-IG_FRAME_INNER = (297, 603, 383, 713)
-IG_FRAME_OUTER = (275, 575, 405, 735)
+# Deer shadow box for Instagram (inner artwork window)
+IG_FRAME_INNER = (1118, 742, 1272, 932)
+IG_FRAME_OUTER = (1100, 735, 1290, 945)
 
 
 def sample_wall_color(im: Image.Image, box: tuple[int, int, int, int]) -> tuple[int, int, int]:
@@ -146,23 +146,28 @@ def main() -> None:
             }
         )
 
-    print("painting Instagram into gold frame...")
+    print("painting Instagram into deer shadow-box frame...")
     ig = Image.open(IG).convert("RGBA")
+    trim = int(min(ig.size) * 0.05)
+    ig = ig.crop((trim, trim, ig.width - trim, ig.height - trim))
     inner = IG_FRAME_INNER
     iw, ih = inner[2] - inner[0], inner[3] - inner[1]
+    wall_rgba = wall.convert("RGBA")
+    mat = Image.new("RGBA", wall.size, (0, 0, 0, 0))
+    ImageDraw.Draw(mat).rectangle(inner, fill=(12, 8, 6, 255))
+    wall_rgba = Image.alpha_composite(wall_rgba, mat)
     ig_fit = ImageOps.fit(ig, (iw, ih), method=Image.Resampling.LANCZOS)
     r, g, b, _ = ig_fit.split()
     rgb = Image.merge("RGB", (r, g, b))
-    rgb = ImageEnhance.Color(rgb).enhance(0.9)
-    rgb = ImageEnhance.Contrast(rgb).enhance(1.08)
-    rgb = ImageEnhance.Brightness(rgb).enhance(0.93)
+    rgb = ImageEnhance.Color(rgb).enhance(0.92)
+    rgb = ImageEnhance.Contrast(rgb).enhance(1.06)
+    rgb = ImageEnhance.Brightness(rgb).enhance(0.88)
     ig_fit = rgb.convert("RGBA")
     mask = Image.new("L", (iw, ih), 0)
-    ImageDraw.Draw(mask).rounded_rectangle((0, 0, iw - 1, ih - 1), radius=3, fill=255)
-    mask = mask.filter(ImageFilter.GaussianBlur(0.8))
-    wall_rgba = wall.convert("RGBA")
+    ImageDraw.Draw(mask).rounded_rectangle((0, 0, iw - 1, ih - 1), radius=2, fill=255)
+    mask = mask.filter(ImageFilter.GaussianBlur(0.5))
     shadow = Image.new("RGBA", wall.size, (0, 0, 0, 0))
-    ImageDraw.Draw(shadow).rectangle(inner, fill=(15, 8, 4, 100))
+    ImageDraw.Draw(shadow).rectangle(inner, fill=(0, 0, 0, 90))
     shadow = shadow.filter(ImageFilter.GaussianBlur(2))
     wall_rgba = Image.alpha_composite(wall_rgba, shadow)
     wall_rgba.paste(ig_fit, (inner[0], inner[1]), mask)

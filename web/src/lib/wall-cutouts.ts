@@ -103,10 +103,10 @@ export const wallCutouts: WallCutout[] = [
     "href": "https://www.instagram.com/lamaggietattoo_studio/",
     "labelKey": "wallInstagram",
     "external": true,
-    "leftPct": 17.188,
-    "topPct": 47.917,
-    "widthPct": 8.125,
-    "heightPct": 13.333,
+    "leftPct": 68.75,
+    "topPct": 61.25,
+    "widthPct": 11.875,
+    "heightPct": 17.5,
     "bakedIn": true
   }
 ];

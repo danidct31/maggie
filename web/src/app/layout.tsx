@@ -24,11 +24,11 @@ const nunito = Nunito({
 
 export const metadata: Metadata = {
   title: {
-    default: "Maggie Studio — Gift vouchers & tattoo merch",
+    default: "Maggie Studio — Buoni regalo e merch tattoo",
     template: "%s · Maggie Studio",
   },
   description:
-    "Maggie Studio — buy gift vouchers (vales de regalo) and tattoo supplies. Studio items here; Amazon checkout when you are ready.",
+    "Maggie Studio — compra buoni regalo e materiali tattoo online. Prodotti dello studio qui; checkout Amazon quando sei pronto.",
 };
 
 export default function RootLayout({
@@ -38,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="it"
       className={`${oswald.variable} ${manrope.variable} ${nunito.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">

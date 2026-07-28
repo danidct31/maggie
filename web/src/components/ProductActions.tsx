@@ -6,10 +6,12 @@ import {
   isPlaceholderAsin,
 } from "@/lib/amazon";
 import { useBag } from "@/lib/bag";
+import { useI18n } from "@/lib/i18n/context";
 import type { Product } from "@/lib/types";
 import { isAmazonProduct } from "@/lib/types";
 
 export function ProductActions({ product }: { product: Product }) {
+  const { t } = useI18n();
   const showSizes = product.sizes.length > 1 || product.sizes[0] !== "ONE";
   const [size, setSize] = useState(product.sizes[0] ?? "");
   const [added, setAdded] = useState(false);
@@ -23,7 +25,7 @@ export function ProductActions({ product }: { product: Product }) {
       {showSizes && (
         <div>
           <p className="mb-3 text-xs uppercase tracking-[0.2em] text-mute">
-            Size
+            {t.product.size}
           </p>
           <div className="flex flex-wrap gap-2">
             {product.sizes.map((s) => (
@@ -42,11 +44,10 @@ export function ProductActions({ product }: { product: Product }) {
 
       {amazon && (
         <p className="text-sm text-mute">
-          Sold via Amazon — stay on Maggie Studio until checkout.
+          {t.product.amazonNote}
           {!asinReady && (
             <span className="mt-1 block text-neon/80">
-              Example listing (ASIN pending). Replace with a real ASIN when the
-              Amazon shop is ready.
+              {t.product.amazonPending}
             </span>
           )}
         </p>
@@ -64,10 +65,10 @@ export function ProductActions({ product }: { product: Product }) {
         >
           <span>
             {added
-              ? "Added to bag"
+              ? t.product.added
               : product.category === "vales"
-                ? "Add voucher to bag"
-                : "Add to bag"}
+                ? t.product.addVoucher
+                : t.product.addToBag}
           </span>
         </button>
 
@@ -78,7 +79,7 @@ export function ProductActions({ product }: { product: Product }) {
             rel="noopener noreferrer sponsored"
             className="btn btn-primary"
           >
-            <span>Buy on Amazon</span>
+            <span>{t.product.buyAmazon}</span>
           </a>
         )}
       </div>

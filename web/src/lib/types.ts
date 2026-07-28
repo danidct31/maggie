@@ -16,8 +16,9 @@ export type Product = {
   updatedAt: string;
 };
 
-export function formatPrice(cents: number) {
-  return new Intl.NumberFormat("es-ES", {
+export function formatPrice(cents: number, locale: string = "it") {
+  const numberLocale = locale === "en" ? "en-IE" : "it-IT";
+  return new Intl.NumberFormat(numberLocale, {
     style: "currency",
     currency: "EUR",
     minimumFractionDigits: 0,
@@ -27,9 +28,9 @@ export function formatPrice(cents: number) {
 
 export function categoryLabel(category: string) {
   const labels: Record<string, string> = {
-    vales: "Gift vouchers",
+    vales: "Buoni regalo",
     aftercare: "Aftercare",
-    supplies: "Supplies",
+    supplies: "Materiali",
     merch: "Merch",
   };
   return labels[category] ?? category;

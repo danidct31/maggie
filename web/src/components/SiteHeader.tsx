@@ -1,19 +1,25 @@
+"use client";
+
 import Link from "next/link";
 import { BagButton } from "@/components/BagButton";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { MaggieLogo } from "@/components/MaggieLogo";
-
-const links = [
-  { href: "/shop", label: "Shop" },
-  { href: "/shop?category=vales", label: "Gift vouchers" },
-  { href: "/shop?category=aftercare", label: "Aftercare" },
-  { href: "/shop?category=supplies", label: "Supplies" },
-];
+import { useI18n } from "@/lib/i18n/context";
 
 export function SiteHeader({
   transparent = false,
 }: {
   transparent?: boolean;
 }) {
+  const { t } = useI18n();
+
+  const links = [
+    { href: "/shop", label: t.nav.shop },
+    { href: "/shop?category=vales", label: t.nav.vouchers },
+    { href: "/shop?category=aftercare", label: t.nav.aftercare },
+    { href: "/shop?category=supplies", label: t.nav.supplies },
+  ];
+
   return (
     <header
       className={
@@ -35,9 +41,10 @@ export function SiteHeader({
           <MaggieLogo size="nav" />
         </div>
 
-        <div className="flex items-center gap-5 text-sm tracking-wide text-white/85">
+        <div className="flex items-center gap-4 text-sm tracking-wide text-white/85 md:gap-5">
+          <LanguageToggle />
           <Link href="/shop" className="nav-link md:hidden">
-            Shop
+            {t.nav.shop}
           </Link>
           <BagButton />
         </div>

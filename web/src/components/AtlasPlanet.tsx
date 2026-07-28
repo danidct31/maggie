@@ -1,78 +1,63 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useI18n } from "@/lib/i18n/context";
 
-type Territory = {
-  id: string;
-  name: string;
+type TerritoryBase = {
+  id: "home" | "shop" | "vales" | "merch" | "aftercare" | "supplies" | "contact";
   href: string;
-  blurb: string;
   path: string;
   labelX: number;
   labelY: number;
 };
 
-const territories: Territory[] = [
+const territoryBases: TerritoryBase[] = [
   {
     id: "home",
-    name: "Home",
     href: "/",
-    blurb: "The studio front door",
     path: "M210 95 C245 70 295 68 330 95 C355 118 360 155 340 185 C310 220 250 225 215 195 C185 165 180 120 210 95 Z",
     labelX: 265,
     labelY: 145,
   },
   {
     id: "shop",
-    name: "Shop",
     href: "/shop",
-    blurb: "Full catalog floor",
     path: "M340 185 C380 170 430 175 455 210 C475 245 465 295 430 320 C390 350 330 345 300 310 C275 280 290 220 340 185 Z",
     labelX: 380,
     labelY: 255,
   },
   {
     id: "vales",
-    name: "Vales",
     href: "/shop?category=vales",
-    blurb: "Gift voucher counter",
     path: "M145 130 C180 115 210 130 215 165 C220 200 195 235 155 245 C115 255 85 220 90 180 C95 145 115 140 145 130 Z",
     labelX: 145,
     labelY: 185,
   },
   {
     id: "merch",
-    name: "Merch",
     href: "/shop?category=merch",
-    blurb: "Prints, kits & totes",
     path: "M430 320 C470 310 510 330 520 370 C530 410 505 450 460 455 C415 460 380 430 375 390 C370 350 395 330 430 320 Z",
     labelX: 450,
     labelY: 390,
   },
   {
     id: "aftercare",
-    name: "Aftercare",
     href: "/shop?category=aftercare",
-    blurb: "Heal right after ink",
     path: "M90 180 C115 200 130 240 125 280 C120 320 90 350 60 340 C30 330 20 285 35 245 C50 205 65 185 90 180 Z",
     labelX: 75,
     labelY: 265,
   },
   {
     id: "supplies",
-    name: "Supplies",
     href: "/shop?category=supplies",
-    blurb: "Studio essentials via Amazon",
     path: "M215 300 C255 290 300 310 310 350 C320 390 295 430 250 440 C205 450 165 420 160 380 C155 340 180 310 215 300 Z",
     labelX: 235,
     labelY: 370,
   },
   {
     id: "contact",
-    name: "Contact",
     href: "mailto:hello@maggiestudio.shop",
-    blurb: "Book or ask the studio",
     path: "M155 245 C185 250 205 275 200 305 C195 335 165 350 135 340 C105 330 100 295 115 270 C125 255 140 245 155 245 Z",
     labelX: 155,
     labelY: 295,
@@ -80,8 +65,30 @@ const territories: Territory[] = [
 ];
 
 export function AtlasPlanet() {
+  const { t } = useI18n();
   const [active, setActive] = useState<string | null>("vales");
-  const current = territories.find((t) => t.id === active) ?? territories[2];
+
+  const territories = useMemo(
+    () =>
+      territoryBases.map((base) => ({
+        ...base,
+        name: t.atlas[base.id],
+        blurb:
+          t.atlas[
+            `blurb${base.id.charAt(0).toUpperCase()}${base.id.slice(1)}` as
+              | "blurbHome"
+              | "blurbShop"
+              | "blurbVales"
+              | "blurbMerch"
+              | "blurbAftercare"
+              | "blurbSupplies"
+              | "blurbContact"
+          ],
+      })),
+    [t],
+  );
+
+  const current = territories.find((item) => item.id === active) ?? territories[2];
 
   return (
     <section className="atlas-section relative overflow-hidden bg-[#140c08] px-5 py-24 text-paper md:px-8 md:py-32">
@@ -89,19 +96,18 @@ export function AtlasPlanet() {
       <div className="relative mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-16">
         <div>
           <p className="text-xs uppercase tracking-[0.22em] text-ember-glow/80">
-            Atlas of Maggie
+            {t.atlas.eyebrow}
           </p>
           <h2 className="mt-4 font-display text-4xl font-bold uppercase tracking-tight md:text-5xl">
-            The studio as a map
+            {t.atlas.title}
           </h2>
           <p className="mt-5 max-w-md text-base leading-relaxed text-white/65">
-            Every territory is a page. Hover a region, then travel — gift
-            vouchers, aftercare, and Amazon supplies.
+            {t.atlas.body}
           </p>
 
           <div className="atlas-legend mt-10 border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm">
             <p className="text-[10px] uppercase tracking-[0.25em] text-ember-glow/70">
-              Selected territory
+              {t.atlas.selected}
             </p>
             <p className="mt-3 font-display text-3xl font-bold uppercase text-ember-glow">
               {current.name}
@@ -110,25 +116,25 @@ export function AtlasPlanet() {
             <Link href={current.href} className="btn btn-primary mt-6">
               <span>
                 {current.href.startsWith("mailto:")
-                  ? "Send a message"
-                  : `Go to ${current.name}`}
+                  ? t.atlas.send
+                  : `${t.atlas.travel} ${current.name}`}
               </span>
             </Link>
           </div>
 
           <ul className="mt-8 flex flex-wrap gap-2">
-            {territories.map((t) => (
-              <li key={t.id}>
+            {territories.map((item) => (
+              <li key={item.id}>
                 <button
                   type="button"
                   className={`btn-chip border-white/20 text-white/80 ${
-                    active === t.id ? "is-active !border-ember" : ""
+                    active === item.id ? "is-active !border-ember" : ""
                   }`}
-                  onMouseEnter={() => setActive(t.id)}
-                  onFocus={() => setActive(t.id)}
-                  onClick={() => setActive(t.id)}
+                  onMouseEnter={() => setActive(item.id)}
+                  onFocus={() => setActive(item.id)}
+                  onClick={() => setActive(item.id)}
                 >
-                  {t.name}
+                  {item.name}
                 </button>
               </li>
             ))}
@@ -141,7 +147,7 @@ export function AtlasPlanet() {
             viewBox="0 0 560 560"
             className="atlas-orb relative z-10 h-auto w-full drop-shadow-2xl"
             role="img"
-            aria-label="Atlas map of the Maggie Studio website"
+            aria-label={t.atlas.title}
           >
             <defs>
               <radialGradient id="ocean" cx="35%" cy="30%" r="70%">
@@ -196,18 +202,18 @@ export function AtlasPlanet() {
                 />
               ))}
 
-              {territories.map((t) => {
-                const isHot = active === t.id;
+              {territories.map((item) => {
+                const isHot = active === item.id;
                 return (
                   <a
-                    key={t.id}
-                    href={t.href}
+                    key={item.id}
+                    href={item.href}
                     className="atlas-country"
-                    onMouseEnter={() => setActive(t.id)}
-                    onFocus={() => setActive(t.id)}
+                    onMouseEnter={() => setActive(item.id)}
+                    onFocus={() => setActive(item.id)}
                   >
                     <path
-                      d={t.path}
+                      d={item.path}
                       fill={isHot ? "url(#landHot)" : "url(#landIdle)"}
                       stroke={
                         isHot
@@ -218,8 +224,8 @@ export function AtlasPlanet() {
                       className="atlas-land"
                     />
                     <text
-                      x={t.labelX}
-                      y={t.labelY}
+                      x={item.labelX}
+                      y={item.labelY}
                       textAnchor="middle"
                       className="atlas-label pointer-events-none"
                       fill={isHot ? "#fff" : "rgba(255,255,255,0.75)"}
@@ -227,7 +233,7 @@ export function AtlasPlanet() {
                       fontWeight="700"
                       style={{ fontFamily: "var(--font-oswald), sans-serif" }}
                     >
-                      {t.name}
+                      {item.name}
                     </text>
                   </a>
                 );

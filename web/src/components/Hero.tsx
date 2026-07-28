@@ -1,87 +1,95 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useI18n } from "@/lib/i18n/context";
 
-type Hotspot = {
+type LabelKey =
+  | "wallShop"
+  | "wallVouchers"
+  | "wallAftercare"
+  | "wallSupplies"
+  | "wallMerch"
+  | "wallBio"
+  | "wallContact"
+  | "wallInstagram";
+
+type ContourSpot = {
   id: string;
   href: string;
-  labelKey:
-    | "wallShop"
-    | "wallVouchers"
-    | "wallAftercare"
-    | "wallSupplies"
-    | "wallMerch"
-    | "wallBio"
-    | "wallContact"
-    | "wallInstagram";
-  /** percent of hero box */
-  style: {
-    left: string;
-    top: string;
-    width: string;
-    height: string;
-  };
+  labelKey: LabelKey;
+  d: string;
   external?: boolean;
-  paintedIg?: boolean;
+  labelX: number;
+  labelY: number;
 };
 
-/**
- * Hotspots mapped to objects on /images/1.jpeg (wall as menu).
- * Positions are % of the hero viewport with object-cover centered.
- */
-const hotspots: Hotspot[] = [
+/** Object contours on /images/1.jpeg (1600×1200). */
+const contours: ContourSpot[] = [
   {
     id: "make-art",
     href: "/shop",
     labelKey: "wallShop",
-    style: { left: "8%", top: "58%", width: "16%", height: "28%" },
+    d: "M95 705 H305 V1095 H95 Z",
+    labelX: 200,
+    labelY: 900,
   },
   {
     id: "skull",
     href: "/shop?category=vales",
     labelKey: "wallVouchers",
-    style: { left: "22%", top: "28%", width: "18%", height: "26%" },
+    d: "M430 250 C500 210 590 205 660 240 C720 280 745 350 730 420 C715 500 670 545 600 560 C520 575 450 540 410 470 C375 400 380 300 430 250 Z",
+    labelX: 560,
+    labelY: 400,
   },
   {
     id: "heart-mirror",
     href: "/shop?category=aftercare",
     labelKey: "wallAftercare",
-    style: { left: "42%", top: "52%", width: "12%", height: "14%" },
+    d: "M800 640 C760 600 700 610 695 670 C690 720 760 780 800 820 C840 780 910 720 905 670 C900 610 840 600 800 640 Z",
+    labelX: 800,
+    labelY: 700,
   },
   {
     id: "patent",
     href: "/shop?category=supplies",
     labelKey: "wallSupplies",
-    style: { left: "58%", top: "30%", width: "14%", height: "32%" },
+    d: "M930 275 H1175 V715 H930 Z",
+    labelX: 1050,
+    labelY: 490,
   },
   {
     id: "leopard",
     href: "/shop?category=merch",
     labelKey: "wallMerch",
-    style: { left: "74%", top: "34%", width: "16%", height: "22%" },
+    d: "M1235 365 H1490 V640 H1235 Z",
+    labelX: 1360,
+    labelY: 500,
   },
   {
     id: "roses",
     href: "#bio",
     labelKey: "wallBio",
-    style: { left: "52%", top: "6%", width: "18%", height: "22%" },
+    d: "M900 20 C980 20 1055 70 1055 160 C1055 250 980 330 900 330 C820 330 745 250 745 160 C745 70 820 20 900 20 Z",
+    labelX: 900,
+    labelY: 170,
   },
   {
     id: "botanical",
     href: "mailto:hello@maggiestudio.shop",
     labelKey: "wallContact",
-    style: { left: "38%", top: "72%", width: "14%", height: "22%" },
+    d: "M690 875 H910 V1165 H690 Z",
+    labelX: 800,
+    labelY: 1020,
     external: true,
   },
   {
     id: "instagram-frame",
     href: "https://www.instagram.com/lamaggietattoo_studio/",
     labelKey: "wallInstagram",
-    style: { left: "26%", top: "54%", width: "11%", height: "14%" },
+    d: "M275 575 H405 V735 H275 Z",
+    labelX: 340,
+    labelY: 655,
     external: true,
-    paintedIg: true,
   },
 ];
 
@@ -96,72 +104,64 @@ export function Hero() {
           alt={t.hero.alt}
           fill
           priority
-          className="hero-media-image object-cover object-[center_35%]"
+          className="hero-media-image object-cover object-center"
           sizes="100vw"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/90 via-transparent to-ink/25" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/20" />
       </div>
 
-      <nav
-        className="absolute inset-0 z-10"
+      <svg
+        className="absolute inset-0 z-10 h-full w-full"
+        viewBox="0 0 1600 1200"
+        preserveAspectRatio="xMidYMid slice"
+        role="navigation"
         aria-label={t.hero.wallHint}
       >
-        {hotspots.map((spot) => {
+        <defs>
+          <filter id="contourGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow
+              dx="0"
+              dy="0"
+              stdDeviation="4"
+              floodColor="#ffcc33"
+              floodOpacity="0.55"
+            />
+          </filter>
+        </defs>
+
+        {contours.map((spot) => {
           const label = t.hero[spot.labelKey];
-          const className =
-            "wall-hotspot group absolute block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neon";
-
-          const content = (
-            <>
-              {spot.paintedIg && (
-                <span className="painted-ig-frame absolute inset-[8%] overflow-hidden rounded-[2px] shadow-[0_0_18px_rgba(255,204,51,0.35)]">
-                  <Image
-                    src="/images/instagram-painted.png"
-                    alt=""
-                    fill
-                    className="object-cover"
-                    sizes="120px"
-                  />
-                </span>
-              )}
-              <span className="wall-hotspot-ring" aria-hidden />
-              <span className="wall-hotspot-label">{label}</span>
-            </>
-          );
-
-          if (spot.external || spot.href.startsWith("mailto:")) {
-            return (
-              <a
-                key={spot.id}
-                href={spot.href}
-                className={className}
-                style={spot.style}
-                aria-label={label}
-                {...(spot.href.startsWith("http")
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-              >
-                {content}
-              </a>
-            );
-          }
+          const isHttp = spot.href.startsWith("http");
 
           return (
-            <Link
+            <a
               key={spot.id}
               href={spot.href}
-              className={className}
-              style={spot.style}
+              className="wall-contour-link"
               aria-label={label}
+              {...(isHttp
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
             >
-              {content}
-            </Link>
+              <path d={spot.d} className="wall-contour" />
+              <foreignObject
+                x={spot.labelX - 90}
+                y={spot.labelY - 70}
+                width="180"
+                height="40"
+                className="pointer-events-none overflow-visible"
+              >
+                <div className="wall-contour-label flex justify-center">
+                  <span>{label}</span>
+                </div>
+              </foreignObject>
+            </a>
           );
         })}
-      </nav>
+      </svg>
 
       <div className="pointer-events-none relative z-20 mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 pb-10 pt-32 md:px-8 md:pb-14">
-        <p className="pointer-events-none max-w-md text-sm tracking-wide text-white/75 md:text-base">
+        <p className="max-w-md text-sm tracking-wide text-white/75 md:text-base">
           {t.hero.wallHint}
         </p>
       </div>

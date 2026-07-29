@@ -10,6 +10,47 @@ export type Dictionary = {
     aftercare: string;
     supplies: string;
     bag: string;
+    login: string;
+  };
+  login: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    username: string;
+    password: string;
+    submit: string;
+    submitting: string;
+    error: string;
+    back: string;
+  };
+  admin: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    administration: string;
+    logout: string;
+  };
+  administration: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    back: string;
+    uploadTitle: string;
+    uploadBody: string;
+    fileLabel: string;
+    upload: string;
+    uploadOk: string;
+    uploadError: string;
+    currentFile: string;
+    download: string;
+    noFile: string;
+    linkTitle: string;
+    linkBody: string;
+    linkLabel: string;
+    saveLink: string;
+    openLink: string;
+    linkOk: string;
+    linkError: string;
   };
   hero: {
     alt: string;
@@ -111,6 +152,49 @@ const en: Dictionary = {
     aftercare: "Aftercare",
     supplies: "Supplies",
     bag: "Bag",
+    login: "Login",
+  },
+  login: {
+    eyebrow: "Studio access",
+    title: "Login",
+    body: "Sign in to open the Maggie Studio admin area.",
+    username: "Username",
+    password: "Password",
+    submit: "Sign in",
+    submitting: "Signing in…",
+    error: "Wrong username or password.",
+    back: "← Back to site",
+  },
+  admin: {
+    eyebrow: "Maggie Studio",
+    title: "Admin",
+    body: "Private studio tools. Open Administration to share an Excel sheet with your team.",
+    administration: "Administration",
+    logout: "Log out",
+  },
+  administration: {
+    eyebrow: "Admin",
+    title: "Administration",
+    body: "Share a spreadsheet in two ways: upload a file here for download, or paste a live Google Sheets / OneDrive link so everyone edits the same sheet.",
+    back: "← Back to admin",
+    uploadTitle: "Upload Excel",
+    uploadBody:
+      "Upload .xlsx, .xls, or .csv. Anyone logged into admin can download the latest file — useful for bookings, stock, or voucher lists.",
+    fileLabel: "Spreadsheet file",
+    upload: "Upload",
+    uploadOk: "Spreadsheet uploaded.",
+    uploadError: "Upload failed. Try again with an Excel or CSV file.",
+    currentFile: "Current file",
+    download: "Download",
+    noFile: "No file uploaded yet.",
+    linkTitle: "Live share link",
+    linkBody:
+      "Best for teamwork: create a Google Sheet (or Excel Online), set sharing to “anyone with the link”, paste the URL here, then open it anytime from admin.",
+    linkLabel: "Sheet URL",
+    saveLink: "Save link",
+    openLink: "Open sheet",
+    linkOk: "Share link saved.",
+    linkError: "Could not save the link.",
   },
   hero: {
     alt: "Maggie Studio neon sign on the studio wall",
@@ -274,6 +358,49 @@ const it: Dictionary = {
     aftercare: "Aftercare",
     supplies: "Materiali",
     bag: "Borsa",
+    login: "Login",
+  },
+  login: {
+    eyebrow: "Accesso studio",
+    title: "Login",
+    body: "Accedi all’area admin di Maggie Studio.",
+    username: "Utente",
+    password: "Password",
+    submit: "Entra",
+    submitting: "Accesso…",
+    error: "Utente o password non validi.",
+    back: "← Torna al sito",
+  },
+  admin: {
+    eyebrow: "Maggie Studio",
+    title: "Admin",
+    body: "Strumenti privati dello studio. Apri Amministrazione per condividere un foglio Excel con il team.",
+    administration: "Amministrazione",
+    logout: "Esci",
+  },
+  administration: {
+    eyebrow: "Admin",
+    title: "Amministrazione",
+    body: "Condividi un foglio in due modi: carica un file da scaricare qui, oppure incolla un link live di Google Fogli / OneDrive così tutti modificano lo stesso foglio.",
+    back: "← Torna ad admin",
+    uploadTitle: "Carica Excel",
+    uploadBody:
+      "Carica .xlsx, .xls o .csv. Chi è loggato in admin può scaricare l’ultimo file — utile per prenotazioni, magazzino o buoni.",
+    fileLabel: "File foglio",
+    upload: "Carica",
+    uploadOk: "Foglio caricato.",
+    uploadError: "Caricamento non riuscito. Riprova con Excel o CSV.",
+    currentFile: "File attuale",
+    download: "Scarica",
+    noFile: "Nessun file caricato.",
+    linkTitle: "Link condiviso live",
+    linkBody:
+      "Ideale per lavorare in team: crea un Google Sheet (o Excel Online), condividi con “chiunque abbia il link”, incolla l’URL qui e aprilo quando serve.",
+    linkLabel: "URL del foglio",
+    saveLink: "Salva link",
+    openLink: "Apri foglio",
+    linkOk: "Link salvato.",
+    linkError: "Impossibile salvare il link.",
   },
   hero: {
     alt: "Insegna al neon Maggie Studio sulla parete dello studio",

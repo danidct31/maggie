@@ -29,7 +29,7 @@ export function Hero() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
-              href="/shop?category=vales"
+              href="#gift-cards"
               className="btn-primary inline-flex items-center justify-center rounded-sm px-6 py-3 text-sm font-semibold uppercase tracking-wide"
             >
               {t.hero.ctaVoucher}

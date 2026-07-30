@@ -1,4 +1,5 @@
 import { AtlasPlanet } from "@/components/AtlasPlanet";
+import { GiftCardsSection } from "@/components/GiftCardsSection";
 import { Hero } from "@/components/Hero";
 import { HomeSections } from "@/components/HomeSections";
 import { MaggieBio } from "@/components/MaggieBio";
@@ -12,6 +13,7 @@ export default async function HomePage() {
     <>
       <SiteHeader transparent />
       <Hero />
+      <GiftCardsSection />
       <MaggieBio />
       <HomeSections featured={featured} />
       <AtlasPlanet />

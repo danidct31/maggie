@@ -112,11 +112,30 @@ export type Dictionary = {
     empty: string;
     amazon: string;
     studio: string;
+    giftCard: string;
     remove: string;
     checkoutAmazon: string;
     amazonPending: string;
     studioNote: string;
     clear: string;
+  };
+  giftCards: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    addToCart: string;
+    addFixed: string;
+    added: string;
+    customTitle: string;
+    customBody: string;
+    amountLabel: string;
+    amountError: string;
+    messageLabel: string;
+    messagePlaceholder: string;
+    create: string;
+    sendToCart: string;
+    preview: string;
+    previewEmpty: string;
   };
   footer: {
     blurb: string;
@@ -264,6 +283,7 @@ const en: Dictionary = {
     empty: "Empty for now — add vouchers or Amazon studio picks.",
     amazon: "Amazon",
     studio: "Studio",
+    giftCard: "Gift card",
     remove: "Remove",
     checkoutAmazon: "Checkout Amazon items",
     amazonPending:
@@ -271,6 +291,25 @@ const en: Dictionary = {
     studioNote:
       "Studio vouchers stay with Maggie — payment for those comes in a later step (Stripe / studio checkout).",
     clear: "Clear bag",
+  },
+  giftCards: {
+    eyebrow: "Give ink",
+    title: "Gift cards",
+    body: "Pick a ready amount, or create a personal card with your own value and message.",
+    addToCart: "Add to bag",
+    addFixed: "Add gift card",
+    added: "Added",
+    customTitle: "Create your own",
+    customBody:
+      "Enter any amount and a short note. Create the card to preview it, then send it to your bag.",
+    amountLabel: "Amount",
+    amountError: "Enter a valid amount (at least €1).",
+    messageLabel: "Personalized text",
+    messagePlaceholder: "Happy birthday — can’t wait to see your next piece.",
+    create: "Create gift card",
+    sendToCart: "Send to cart",
+    preview: "Your gift card",
+    previewEmpty: "Press Create gift card to see it here.",
   },
   footer: {
     blurb:
@@ -475,6 +514,7 @@ const it: Dictionary = {
     empty: "Vuota per ora — aggiungi buoni o prodotti Amazon dello studio.",
     amazon: "Amazon",
     studio: "Studio",
+    giftCard: "Buono regalo",
     remove: "Rimuovi",
     checkoutAmazon: "Checkout prodotti Amazon",
     amazonPending:
@@ -482,6 +522,25 @@ const it: Dictionary = {
     studioNote:
       "I buoni dello studio restano con Maggie — il pagamento arriverà in un passo successivo (Stripe / checkout studio).",
     clear: "Svuota borsa",
+  },
+  giftCards: {
+    eyebrow: "Regala inchiostro",
+    title: "Buoni regalo",
+    body: "Scegli un importo pronto, oppure crea un buono personale con importo e messaggio a scelta.",
+    addToCart: "Aggiungi alla borsa",
+    addFixed: "Aggiungi buono",
+    added: "Aggiunto",
+    customTitle: "Crea il tuo",
+    customBody:
+      "Inserisci un importo e un breve messaggio. Crea il buono per vederlo subito, poi invialo alla borsa.",
+    amountLabel: "Importo",
+    amountError: "Inserisci un importo valido (almeno €1).",
+    messageLabel: "Testo personalizzato",
+    messagePlaceholder: "Buon compleanno — non vedo l’ora del tuo prossimo pezzo.",
+    create: "Crea buono regalo",
+    sendToCart: "Invia al carrello",
+    preview: "Il tuo buono",
+    previewEmpty: "Premi Crea buono regalo per vederlo qui.",
   },
   footer: {
     blurb:

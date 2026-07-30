@@ -25,12 +25,21 @@ export type BagItem = {
   fulfillment: "studio" | "amazon";
   amazonAsin: string | null;
   quantity: number;
+  giftMessage?: string | null;
+  isGiftCard?: boolean;
+};
+
+export type GiftCardInput = {
+  amountCents: number;
+  message?: string;
+  label?: string;
 };
 
 type BagContextValue = {
   items: BagItem[];
   count: number;
   addProduct: (product: Product, quantity?: number) => void;
+  addGiftCard: (input: GiftCardInput) => void;
   removeItem: (productId: string) => void;
   clear: () => void;
   amazonLines: AmazonCartLine[];
@@ -38,7 +47,7 @@ type BagContextValue = {
   checkoutAmazonUrl: string | null;
 };
 
-const STORAGE_KEY = "maggie-studio-bag-v1";
+const STORAGE_KEY = "maggie-studio-bag-v2";
 const BagContext = createContext<BagContextValue | null>(null);
 
 function loadBag(): BagItem[] {
@@ -51,6 +60,14 @@ function loadBag(): BagItem[] {
   } catch {
     return [];
   }
+}
+
+function giftCardId(amountCents: number, message?: string) {
+  const msg = (message ?? "").trim();
+  if (msg) {
+    return `gift-${amountCents}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+  }
+  return `gift-${amountCents}`;
 }
 
 export function BagProvider({ children }: { children: ReactNode }) {
@@ -93,6 +110,48 @@ export function BagProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const addGiftCard = useCallback((input: GiftCardInput) => {
+    const amountCents = Math.round(input.amountCents);
+    if (!Number.isFinite(amountCents) || amountCents < 100) return;
+
+    const message = input.message?.trim() || null;
+    const euros = amountCents / 100;
+    const name =
+      input.label ??
+      (message
+        ? `Gift card €${euros}`
+        : `Gift card €${euros}`);
+
+    setItems((prev) => {
+      const productId = giftCardId(amountCents, message ?? undefined);
+      if (!message) {
+        const existing = prev.find((item) => item.productId === productId);
+        if (existing) {
+          return prev.map((item) =>
+            item.productId === productId
+              ? { ...item, quantity: item.quantity + 1 }
+              : item,
+          );
+        }
+      }
+      return [
+        ...prev,
+        {
+          productId,
+          slug: "gift-card",
+          name,
+          priceCents: amountCents,
+          imageUrl: "/images/1.jpeg",
+          fulfillment: "studio" as const,
+          amazonAsin: null,
+          quantity: 1,
+          giftMessage: message,
+          isGiftCard: true,
+        },
+      ];
+    });
+  }, []);
+
   const removeItem = useCallback((productId: string) => {
     setItems((prev) => prev.filter((item) => item.productId !== productId));
   }, []);
@@ -127,6 +186,7 @@ export function BagProvider({ children }: { children: ReactNode }) {
     items,
     count: items.reduce((sum, item) => sum + item.quantity, 0),
     addProduct,
+    addGiftCard,
     removeItem,
     clear,
     amazonLines,

@@ -146,6 +146,8 @@ function BagLine({
     imageUrl: string;
     fulfillment: "studio" | "amazon";
     quantity: number;
+    giftMessage?: string | null;
+    isGiftCard?: boolean;
   };
   locale: string;
   onRemove: () => void;
@@ -153,27 +155,45 @@ function BagLine({
 }) {
   const { t } = useI18n();
   const copy = useProductCopy(item.slug, item.name, "");
+  const title = item.isGiftCard ? item.name : copy.name;
 
   return (
     <li className="flex gap-4">
-      <Link
-        href={`/product/${item.slug}`}
-        className="relative h-20 w-16 shrink-0 overflow-hidden bg-mist"
-        onClick={onNavigate}
-      >
-        <Image
-          src={item.imageUrl}
-          alt={copy.name}
-          fill
-          className="object-cover"
-          sizes="64px"
-        />
-      </Link>
+      {item.isGiftCard ? (
+        <div className="relative flex h-20 w-16 shrink-0 items-center justify-center overflow-hidden bg-[#2a160e] text-center">
+          <span className="px-1 font-display text-sm font-bold text-neon">
+            {formatPrice(item.priceCents, locale)}
+          </span>
+        </div>
+      ) : (
+        <Link
+          href={`/product/${item.slug}`}
+          className="relative h-20 w-16 shrink-0 overflow-hidden bg-mist"
+          onClick={onNavigate}
+        >
+          <Image
+            src={item.imageUrl}
+            alt={title}
+            fill
+            className="object-cover"
+            sizes="64px"
+          />
+        </Link>
+      )}
       <div className="min-w-0 flex-1">
-        <p className="font-display font-semibold leading-tight">{copy.name}</p>
+        <p className="font-display font-semibold leading-tight">{title}</p>
+        {item.giftMessage ? (
+          <p className="mt-1 line-clamp-2 text-xs italic text-white/60">
+            “{item.giftMessage}”
+          </p>
+        ) : null}
         <p className="mt-1 text-xs uppercase tracking-[0.18em] text-mute">
-          {item.fulfillment === "amazon" ? t.bag.amazon : t.bag.studio} · ×
-          {item.quantity}
+          {item.isGiftCard
+            ? t.bag.giftCard
+            : item.fulfillment === "amazon"
+              ? t.bag.amazon
+              : t.bag.studio}{" "}
+          · ×{item.quantity}
         </p>
         <p className="mt-1 text-sm tabular-nums">
           {formatPrice(item.priceCents * item.quantity, locale)}

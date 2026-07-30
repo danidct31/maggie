@@ -9,8 +9,13 @@ export type Dictionary = {
     vouchers: string;
     aftercare: string;
     supplies: string;
+    merch: string;
+    bio: string;
     bag: string;
     login: string;
+    menu: string;
+    openMenu: string;
+    closeMenu: string;
   };
   login: {
     eyebrow: string;
@@ -151,8 +156,13 @@ const en: Dictionary = {
     vouchers: "Gift vouchers",
     aftercare: "Aftercare",
     supplies: "Supplies",
+    merch: "Merch",
+    bio: "Maggie",
     bag: "Bag",
     login: "Login",
+    menu: "Main menu",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
   },
   login: {
     eyebrow: "Studio access",
@@ -357,8 +367,13 @@ const it: Dictionary = {
     vouchers: "Buoni regalo",
     aftercare: "Aftercare",
     supplies: "Materiali",
+    merch: "Merch",
+    bio: "Maggie",
     bag: "Borsa",
     login: "Login",
+    menu: "Menu principale",
+    openMenu: "Apri menu",
+    closeMenu: "Chiudi menu",
   },
   login: {
     eyebrow: "Accesso studio",

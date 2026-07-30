@@ -26,11 +26,28 @@ export function BagButton() {
     <>
       <button
         type="button"
-        className="nav-link"
+        className="nav-link inline-flex items-center gap-1.5 whitespace-nowrap"
         aria-label={`${t.nav.bag} (${count})`}
         onClick={() => setOpen(true)}
       >
-        {t.nav.bag} ({count})
+        <svg
+          viewBox="0 0 24 24"
+          className="h-5 w-5 sm:hidden"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.7"
+          aria-hidden
+        >
+          <path
+            d="M6 8h12l-1 12H7L6 8zm3-3a3 3 0 0 1 6 0"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <span className="hidden sm:inline">
+          {t.nav.bag} ({count})
+        </span>
+        <span className="sm:hidden text-sm">{count}</span>
       </button>
 
       {open && (

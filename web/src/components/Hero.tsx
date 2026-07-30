@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { MaggieLogo } from "@/components/MaggieLogo";
 import { useI18n } from "@/lib/i18n/context";
 
 export function Hero() {
@@ -25,8 +24,7 @@ export function Hero() {
 
       <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 pb-16 pt-28 md:px-8 md:pb-24">
         <div className="animate-rise max-w-2xl">
-          <MaggieLogo size="hero" href={null} />
-          <p className="mt-6 max-w-md text-base leading-relaxed text-white/80 md:text-lg">
+          <p className="max-w-md text-base leading-relaxed text-white/80 md:text-lg">
             {t.hero.tagline}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">

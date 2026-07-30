@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { FormEvent, useState } from "react";
 import { useBag } from "@/lib/bag";
 import { useI18n } from "@/lib/i18n/context";
@@ -7,17 +8,85 @@ import { formatPrice } from "@/lib/types";
 
 const FIXED_AMOUNTS = [50, 100, 150, 200] as const;
 
+type GiftBg = {
+  id: string;
+  src: string;
+  position: string;
+  tone: "ember" | "neon" | "ink" | "rose" | "gold";
+};
+
+/** Tattoo-shop wall / desk crops — warm studio look matching the site. */
+const GIFT_BACKGROUNDS: GiftBg[] = [
+  {
+    id: "skull-wall",
+    src: "/images/1.jpeg",
+    position: "30% 22%",
+    tone: "ink",
+  },
+  {
+    id: "neon-sign",
+    src: "/images/1.jpeg",
+    position: "58% 38%",
+    tone: "neon",
+  },
+  {
+    id: "roses",
+    src: "/images/1.jpeg",
+    position: "52% 6%",
+    tone: "rose",
+  },
+  {
+    id: "heart-wall",
+    src: "/images/1.jpeg",
+    position: "45% 62%",
+    tone: "ember",
+  },
+  {
+    id: "studio-desk",
+    src: "/images/2.jpeg",
+    position: "48% 42%",
+    tone: "gold",
+  },
+  {
+    id: "make-art",
+    src: "/images/1.jpeg",
+    position: "10% 68%",
+    tone: "ember",
+  },
+  {
+    id: "patent",
+    src: "/images/1.jpeg",
+    position: "72% 32%",
+    tone: "ink",
+  },
+];
+
 function GiftCardFace({
   amountLabel,
   message,
   studio,
+  bg,
 }: {
   amountLabel: string;
   message?: string;
   studio: string;
+  bg: GiftBg;
 }) {
   return (
-    <div className={`gift-card-face${message ? "" : " gift-card-face--plain"}`}>
+    <div
+      className={`gift-card-face gift-card-face--${bg.tone}${message ? "" : " gift-card-face--plain"}`}
+    >
+      <div className="gift-card-bg" aria-hidden>
+        <Image
+          src={bg.src}
+          alt=""
+          fill
+          className="object-cover"
+          style={{ objectPosition: bg.position }}
+          sizes="(max-width: 768px) 50vw, 320px"
+        />
+      </div>
+      <div className="gift-card-scrim" aria-hidden />
       <p className="gift-card-studio">{studio}</p>
       <div className="gift-card-body">
         <p className="gift-card-amount">{amountLabel}</p>
@@ -36,7 +105,9 @@ export function GiftCardsSection() {
   const [preview, setPreview] = useState<{
     amountCents: number;
     message: string;
+    bgIndex: number;
   } | null>(null);
+  const [customBgIndex, setCustomBgIndex] = useState(4);
   const [customError, setCustomError] = useState<string | null>(null);
   const [customAdded, setCustomAdded] = useState(false);
 
@@ -53,6 +124,10 @@ export function GiftCardsSection() {
     return Math.round(value * 100);
   }
 
+  function nextCustomBg(from: number) {
+    return (from + 1) % GIFT_BACKGROUNDS.length;
+  }
+
   function onCreate(event: FormEvent) {
     event.preventDefault();
     setCustomError(null);
@@ -63,9 +138,12 @@ export function GiftCardsSection() {
       setPreview(null);
       return;
     }
+    const bgIndex = nextCustomBg(customBgIndex);
+    setCustomBgIndex(bgIndex);
     setPreview({
       amountCents,
       message: customMessage.trim(),
+      bgIndex,
     });
   }
 
@@ -77,9 +155,12 @@ export function GiftCardsSection() {
       return;
     }
     if (!preview) {
+      const bgIndex = nextCustomBg(customBgIndex);
+      setCustomBgIndex(bgIndex);
       setPreview({
         amountCents,
         message: customMessage.trim(),
+        bgIndex,
       });
     }
     addGiftCard({
@@ -107,8 +188,9 @@ export function GiftCardsSection() {
         </p>
 
         <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5">
-          {FIXED_AMOUNTS.map((euros) => {
+          {FIXED_AMOUNTS.map((euros, index) => {
             const justAdded = addedAmount === euros;
+            const bg = GIFT_BACKGROUNDS[index];
             return (
               <button
                 key={euros}
@@ -120,6 +202,7 @@ export function GiftCardsSection() {
                 <GiftCardFace
                   amountLabel={`${euros}€`}
                   studio="Maggie Studio"
+                  bg={bg}
                 />
                 <span className="gift-card-cta">
                   {justAdded ? t.giftCards.added : t.giftCards.addToCart}
@@ -211,11 +294,12 @@ export function GiftCardsSection() {
                 {t.giftCards.preview}
               </p>
               {preview ? (
-                <div className="gift-card-preview animate-rise">
+                <div className="gift-card-preview animate-rise" key={preview.bgIndex}>
                   <GiftCardFace
                     amountLabel={formatPrice(preview.amountCents, locale)}
                     message={preview.message || undefined}
                     studio="Maggie Studio"
+                    bg={GIFT_BACKGROUNDS[preview.bgIndex]}
                   />
                 </div>
               ) : (

@@ -552,20 +552,76 @@ body {
   width: 100%;
   overflow: hidden;
   border: 1px solid rgba(255, 204, 51, 0.28);
-  background:
-    radial-gradient(circle at 18% 20%, rgba(255, 204, 51, 0.18), transparent 42%),
-    linear-gradient(145deg, #3a2216 0%, #1a100c 55%, #100a07 100%);
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
   padding: 1rem 1.1rem;
   display: flex;
   flex-direction: column;
+  isolation: isolate;
   transition:
     transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
     border-color 0.25s ease,
     box-shadow 0.35s ease;
 }
 
+.gift-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.gift-card-bg img {
+  transform: scale(1.04);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gift-card-btn:hover .gift-card-bg img,
+.gift-card-btn:focus-visible .gift-card-bg img {
+  transform: scale(1.1);
+}
+
+.gift-card-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(16, 10, 7, 0.35) 0%, rgba(16, 10, 7, 0.72) 100%),
+    radial-gradient(circle at 20% 15%, rgba(255, 204, 51, 0.16), transparent 45%);
+}
+
+.gift-card-face--ember .gift-card-scrim {
+  background:
+    linear-gradient(160deg, rgba(26, 12, 8, 0.4) 0%, rgba(138, 61, 24, 0.45) 45%, rgba(16, 10, 7, 0.82) 100%),
+    radial-gradient(circle at 80% 20%, rgba(196, 92, 42, 0.35), transparent 50%);
+}
+
+.gift-card-face--neon .gift-card-scrim {
+  background:
+    linear-gradient(155deg, rgba(16, 10, 7, 0.25) 0%, rgba(16, 10, 7, 0.7) 100%),
+    radial-gradient(circle at 50% 40%, rgba(255, 204, 51, 0.28), transparent 55%);
+}
+
+.gift-card-face--ink .gift-card-scrim {
+  background:
+    linear-gradient(170deg, rgba(10, 6, 4, 0.45) 0%, rgba(16, 10, 7, 0.85) 100%),
+    radial-gradient(circle at 30% 70%, rgba(42, 28, 20, 0.5), transparent 50%);
+}
+
+.gift-card-face--rose .gift-card-scrim {
+  background:
+    linear-gradient(150deg, rgba(42, 16, 18, 0.4) 0%, rgba(16, 10, 7, 0.8) 100%),
+    radial-gradient(circle at 70% 30%, rgba(196, 92, 42, 0.25), transparent 48%);
+}
+
+.gift-card-face--gold .gift-card-scrim {
+  background:
+    linear-gradient(145deg, rgba(26, 20, 8, 0.35) 0%, rgba(16, 10, 7, 0.78) 100%),
+    radial-gradient(circle at 25% 25%, rgba(255, 246, 194, 0.18), transparent 42%);
+}
+
 .gift-card-body {
+  position: relative;
+  z-index: 2;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -588,6 +644,8 @@ body {
 }
 
 .gift-card-studio {
+  position: relative;
+  z-index: 2;
   font-family: var(--font-logo), var(--font-nunito), sans-serif;
   font-size: 0.68rem;
   font-weight: 800;
@@ -602,14 +660,17 @@ body {
   font-weight: 700;
   letter-spacing: 0.04em;
   color: #fff6c2;
-  text-shadow: 0 0 18px rgba(255, 204, 51, 0.35);
+  text-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.75),
+    0 0 18px rgba(255, 204, 51, 0.35);
 }
 
 .gift-card-message {
   margin-top: 0.35rem;
   font-size: 0.82rem;
   line-height: 1.35;
-  color: rgba(240, 230, 220, 0.78);
+  color: rgba(255, 246, 220, 0.92);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;

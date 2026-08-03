@@ -15,49 +15,55 @@ type GiftBg = {
   tone: "ember" | "neon" | "ink" | "rose" | "gold";
 };
 
-/** Tattoo-shop wall / desk crops — warm studio look matching the site. */
+/** Split studio scenes from the ChatGPT gift grids. */
 const GIFT_BACKGROUNDS: GiftBg[] = [
   {
-    id: "skull-wall",
-    src: "/images/1.jpeg",
-    position: "30% 22%",
+    id: "brick-typewriter",
+    src: "/images/gift-bgs/gift-bg-01.jpg",
+    position: "50% 45%",
     tone: "ink",
   },
   {
-    id: "neon-sign",
-    src: "/images/1.jpeg",
-    position: "58% 38%",
-    tone: "neon",
-  },
-  {
-    id: "roses",
-    src: "/images/1.jpeg",
-    position: "52% 6%",
-    tone: "rose",
-  },
-  {
-    id: "heart-wall",
-    src: "/images/1.jpeg",
-    position: "45% 62%",
-    tone: "ember",
-  },
-  {
-    id: "studio-desk",
-    src: "/images/2.jpeg",
-    position: "48% 42%",
+    id: "bright-shelf",
+    src: "/images/gift-bgs/gift-bg-02.jpg",
+    position: "50% 40%",
     tone: "gold",
   },
   {
-    id: "make-art",
-    src: "/images/1.jpeg",
-    position: "10% 68%",
+    id: "dark-desk",
+    src: "/images/gift-bgs/gift-bg-03.jpg",
+    position: "50% 42%",
+    tone: "neon",
+  },
+  {
+    id: "green-cabinet",
+    src: "/images/gift-bgs/gift-bg-04.jpg",
+    position: "50% 40%",
+    tone: "rose",
+  },
+  {
+    id: "arch-alcove",
+    src: "/images/gift-bgs/gift-bg-05.jpg",
+    position: "50% 40%",
+    tone: "gold",
+  },
+  {
+    id: "wire-grid",
+    src: "/images/gift-bgs/gift-bg-06.jpg",
+    position: "50% 42%",
+    tone: "ink",
+  },
+  {
+    id: "leather-study",
+    src: "/images/gift-bgs/gift-bg-07.jpg",
+    position: "50% 40%",
     tone: "ember",
   },
   {
-    id: "patent",
-    src: "/images/1.jpeg",
-    position: "72% 32%",
-    tone: "ink",
+    id: "surf-shack",
+    src: "/images/gift-bgs/gift-bg-08.jpg",
+    position: "50% 42%",
+    tone: "neon",
   },
 ];
 

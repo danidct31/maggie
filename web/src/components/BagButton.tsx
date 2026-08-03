@@ -12,6 +12,8 @@ export function BagButton() {
     useBag();
   const { t, locale } = useI18n();
   const [open, setOpen] = useState(false);
+  const [paying, setPaying] = useState(false);
+  const [payError, setPayError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -21,6 +23,44 @@ export function BagButton() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
+
+  const studioTotalCents = studioItems.reduce(
+    (sum, item) => sum + item.priceCents * item.quantity,
+    0,
+  );
+
+  async function payWithStripe() {
+    if (studioItems.length === 0 || paying) return;
+    setPaying(true);
+    setPayError(null);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          locale,
+          items: studioItems.map((item) => ({
+            productId: item.productId,
+            name: item.name,
+            priceCents: item.priceCents,
+            quantity: item.quantity,
+            giftMessage: item.giftMessage ?? null,
+            isGiftCard: Boolean(item.isGiftCard),
+          })),
+        }),
+      });
+      const data = (await res.json()) as { url?: string; error?: string };
+      if (!res.ok || !data.url) {
+        setPayError(data.error ?? t.bag.payError);
+        return;
+      }
+      window.location.href = data.url;
+    } catch {
+      setPayError(t.bag.payError);
+    } finally {
+      setPaying(false);
+    }
+  }
 
   return (
     <>
@@ -91,12 +131,34 @@ export function BagButton() {
             </div>
 
             <div className="space-y-3 border-t border-line px-5 py-5">
+              {studioItems.length > 0 && (
+                <>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-mute">{t.bag.studioTotal}</span>
+                    <span className="font-display text-lg font-semibold tabular-nums text-neon">
+                      {formatPrice(studioTotalCents, locale)}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn btn-primary w-full disabled:opacity-60"
+                    onClick={payWithStripe}
+                    disabled={paying}
+                  >
+                    <span>{paying ? t.bag.paying : t.bag.payStripe}</span>
+                  </button>
+                  <p className="text-xs leading-relaxed text-mute">
+                    {t.bag.studioNote}
+                  </p>
+                </>
+              )}
+
               {checkoutAmazonUrl ? (
                 <a
                   href={checkoutAmazonUrl}
                   target="_blank"
                   rel="noopener noreferrer sponsored"
-                  className="btn btn-primary w-full"
+                  className="btn btn-ghost w-full !text-[var(--foreground)] !border-[var(--line)]"
                   onClick={() => setOpen(false)}
                 >
                   <span>{t.bag.checkoutAmazon}</span>
@@ -109,11 +171,11 @@ export function BagButton() {
                 )
               )}
 
-              {studioItems.length > 0 && (
-                <p className="text-xs leading-relaxed text-mute">
-                  {t.bag.studioNote}
+              {payError ? (
+                <p className="text-sm text-ember-glow" role="alert">
+                  {payError}
                 </p>
-              )}
+              ) : null}
 
               {items.length > 0 && (
                 <button

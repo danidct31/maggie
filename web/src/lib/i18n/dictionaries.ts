@@ -117,7 +117,19 @@ export type Dictionary = {
     checkoutAmazon: string;
     amazonPending: string;
     studioNote: string;
+    studioTotal: string;
+    payStripe: string;
+    paying: string;
+    payError: string;
     clear: string;
+  };
+  checkout: {
+    eyebrow: string;
+    successTitle: string;
+    successBody: string;
+    cancelTitle: string;
+    cancelBody: string;
+    back: string;
   };
   giftCards: {
     eyebrow: string;
@@ -288,9 +300,21 @@ const en: Dictionary = {
     checkoutAmazon: "Checkout Amazon items",
     amazonPending:
       "Amazon checkout unlocks when real ASINs replace the PENDING placeholders.",
-    studioNote:
-      "Studio vouchers stay with Maggie — payment for those comes in a later step (Stripe / studio checkout).",
+    studioNote: "Gift cards are paid securely with Stripe (card).",
+    studioTotal: "Studio total",
+    payStripe: "Pay with card",
+    paying: "Redirecting to Stripe…",
+    payError: "Could not start payment. Check Stripe keys and try again.",
     clear: "Clear bag",
+  },
+  checkout: {
+    eyebrow: "Checkout",
+    successTitle: "Payment received",
+    successBody:
+      "Thanks — your gift card payment went through. Maggie will follow up by email with your voucher details.",
+    cancelTitle: "Payment cancelled",
+    cancelBody: "No charge was made. Your bag is still here if you want to try again.",
+    back: "Back to gift cards",
   },
   giftCards: {
     eyebrow: "Give ink",
@@ -519,9 +543,21 @@ const it: Dictionary = {
     checkoutAmazon: "Checkout prodotti Amazon",
     amazonPending:
       "Il checkout Amazon si attiva quando gli ASIN PENDING vengono sostituiti con quelli reali.",
-    studioNote:
-      "I buoni dello studio restano con Maggie — il pagamento arriverà in un passo successivo (Stripe / checkout studio).",
+    studioNote: "I buoni regalo si pagano in sicurezza con Stripe (carta).",
+    studioTotal: "Totale studio",
+    payStripe: "Paga con carta",
+    paying: "Reindirizzamento a Stripe…",
+    payError: "Impossibile avviare il pagamento. Controlla le chiavi Stripe e riprova.",
     clear: "Svuota borsa",
+  },
+  checkout: {
+    eyebrow: "Checkout",
+    successTitle: "Pagamento ricevuto",
+    successBody:
+      "Grazie — il pagamento del buono è andato a buon fine. Maggie ti contatterà via email con i dettagli del voucher.",
+    cancelTitle: "Pagamento annullato",
+    cancelBody: "Non è stato addebitato nulla. La borsa è ancora lì se vuoi riprovare.",
+    back: "Torna ai buoni regalo",
   },
   giftCards: {
     eyebrow: "Regala inchiostro",
